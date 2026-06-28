@@ -1,0 +1,49 @@
+# Data manifest — the marketplace + Luna's installer read this WITHOUT importing
+# the plugin's Python. Keep it in sync with the PluginManifest in __init__.py.
+
+name = "personality-template"
+version = "0.1.1"
+description = "A left-pane gallery of sci-fi AI personalities; apply one to reshape Luna's voice."
+entry = "personality_template"
+sdk_version = "0"
+license = "MIT"
+category = "global"
+tags = ["personality", "identity", "fun", "sci-fi"]
+readme = """
+# personality-template
+
+A **Personality** section in Luna's left sidebar: browse a gallery of famous
+sci-fi helper AIs (Jarvis, Cortana, Data, Oracle, T-800, and more) and apply one
+in a click. Applying reshapes Luna's settable prompt surfaces — persona, tone,
+verbosity, formality, emoji use, proactivity, honesty — so the agent's whole
+voice shifts. Reversible: "Reset to default Luna" restores stock.
+
+The agent can also propose a fitting personality in chat via the
+`recommend-personality` skill; setting it always requires your approval.
+
+## Tools
+- `personality_list()` -> the available personalities (read-only).
+- `personality_preview(id)` -> one personality's voice + the exact change set (read-only).
+
+Applying is done with your approval through Luna's `manage_config` (in chat) or
+the gallery's Apply button (which calls `PUT /api/p/plugin-identity/`).
+
+Source: https://github.com/huemorgan/personality-template
+"""
+
+# Capabilities this plugin needs from the host (display + future compat gate).
+[requires]
+tools = 2
+skills = 1
+
+[[tools]]
+name = "personality_list"
+description = "List the available sci-fi AI personalities."
+policy = "auto_approve"
+risk_level = "low"
+
+[[tools]]
+name = "personality_preview"
+description = "Preview one personality and get its exact change set."
+policy = "auto_approve"
+risk_level = "low"

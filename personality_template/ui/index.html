@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Personality</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="title">
+      <h1>Personality</h1>
+      <span class="hint">Try a voice — fine-tune or change it anytime in Settings.</span>
+    </div>
+    <div class="actions">
+      <button id="reset-btn" class="btn ghost" title="Restore Luna's default voice">Reset to default Luna</button>
+      <button id="refresh-btn" class="btn ghost" title="Reload">↻</button>
+    </div>
+  </header>
+
+  <div id="error" class="error hidden"></div>
+  <div id="loading" class="muted pad">Loading personalities…</div>
+
+  <main id="gallery" class="gallery hidden"></main>
+
+  <!-- Preview drawer -->
+  <div id="drawer" class="drawer hidden">
+    <div class="drawer-backdrop" id="drawer-backdrop"></div>
+    <div class="drawer-panel" role="dialog" aria-modal="true">
+      <div class="drawer-head">
+        <img id="d-avatar" class="d-avatar" alt="" />
+        <div class="d-headtext">
+          <h2 id="d-name"></h2>
+          <div class="d-sub"><span id="d-source"></span> · <span id="d-archetype"></span></div>
+          <div id="d-voice" class="d-voice"></div>
+        </div>
+        <button id="drawer-close" class="btn ghost close">✕</button>
+      </div>
+      <div id="d-novelty" class="novelty-warn hidden">Novelty personality — a gloomy joke. It still does excellent work.</div>
+      <div class="d-block">
+        <div class="d-label">Sample reply</div>
+        <div id="d-sample" class="d-sample"></div>
+      </div>
+      <div class="d-block">
+        <div class="d-label">Persona</div>
+        <div id="d-persona" class="d-persona"></div>
+      </div>
+      <div class="d-block">
+        <div class="d-label">What will change</div>
+        <div id="d-diff" class="d-diff"></div>
+      </div>
+      <div class="drawer-foot">
+        <button id="apply-btn" class="btn primary">Apply</button>
+        <button id="cancel-btn" class="btn ghost">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
