@@ -108,7 +108,7 @@ body {
 }
 @keyframes slidein { from { transform: translateX(20px); opacity: .6; } to { transform: none; opacity: 1; } }
 .drawer-head { display: flex; align-items: flex-start; gap: 14px; }
-.d-avatar { width: 64px; height: 64px; border-radius: 14px; object-fit: cover; border: 1px solid var(--line); flex: none; }
+.d-avatar { width: 110px; height: 110px; border-radius: 16px; object-fit: cover; border: 1px solid var(--line); flex: none; }
 .d-headtext { flex: 1; }
 .d-headtext h2 { margin: 0 0 2px; font-size: 18px; }
 .d-sub { font-size: 12px; color: var(--ink-3); }
@@ -121,9 +121,9 @@ body {
 .d-block { display: flex; flex-direction: column; gap: 6px; }
 .d-label { font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-3); }
 .d-sample {
-  font-style: italic; color: var(--ink); background: var(--panel-2);
-  border: 1px solid var(--line); border-left: 3px solid var(--accent);
-  padding: 10px 12px; border-radius: 9px;
+  font-family: "Iowan Old Style", "Palatino", Georgia, "Times New Roman", serif;
+  font-style: italic; color: var(--ink);
+  font-size: 20px; line-height: 1.5; padding: 2px 0;
 }
 .d-persona { color: var(--ink-2); }
 .d-diff { display: flex; flex-direction: column; gap: 4px; }
