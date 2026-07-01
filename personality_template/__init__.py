@@ -50,9 +50,10 @@ _CAPABILITY_NOTE = (
 class PersonalityTemplatePlugin(LunaPlugin):
     manifest = PluginManifest(
         name="personality-template",
+        shown_name="Personality Template",
         icon="drama",
         image="assets/icon.png",
-        version="0.1.3",
+        version="0.1.4",
         description="A left-pane gallery of sci-fi AI personalities; apply one to reshape Luna's voice.",
         category="global",
         license="MIT",
