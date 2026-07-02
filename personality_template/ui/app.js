@@ -83,8 +83,10 @@ async function boot() {
 }
 
 // Build a flat field map for a personality card (persona + knobs).
+// `apply_persona` is the composed, in-character persona (names the character,
+// folds in catchphrase + GIF guidance); fall back to the plain persona.
 function cardFields(p) {
-  return { persona: p.persona, ...(p.knobs || {}) };
+  return { persona: p.apply_persona || p.persona, ...(p.knobs || {}) };
 }
 
 function render() {
@@ -141,6 +143,16 @@ function openDrawer(p) {
   el('d-novelty').classList.toggle('hidden', !p.novelty);
   el('d-sample').textContent = p.sample_reply;
   el('d-persona').textContent = p.persona;
+
+  // Signature lines (catchphrases) + GIF vibes — flavor that makes it in-character.
+  const phrases = p.catchphrases || [];
+  el('d-phrases-block').classList.toggle('hidden', !phrases.length);
+  el('d-phrases').innerHTML = phrases
+    .map((c) => `<span class="phrase">${esc(c)}</span>`).join('');
+  const gifs = p.gif_terms || [];
+  el('d-gif-block').classList.toggle('hidden', !gifs.length);
+  el('d-gifs').innerHTML = gifs
+    .map((t) => `<span class="chip gif-chip">${esc(t)}</span>`).join('');
 
   // diff
   const want = { ...cardFields(p), emoji: p.emoji };

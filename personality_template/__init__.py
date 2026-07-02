@@ -53,7 +53,7 @@ class PersonalityTemplatePlugin(LunaPlugin):
         shown_name="Personality Template",
         icon="drama",
         image="assets/icon.png",
-        version="0.1.4",
+        version="0.2.0",
         description="A left-pane gallery of sci-fi AI personalities; apply one to reshape Luna's voice.",
         category="global",
         license="MIT",
@@ -96,6 +96,8 @@ class PersonalityTemplatePlugin(LunaPlugin):
                 "voice": summarize_voice(p.personality_changes()),
                 "tagline": p.tagline,
                 "sample_reply": p.sample_reply,
+                "catchphrases": list(p.catchphrases),
+                "gif_terms": list(p.gif_terms),
                 "personality_changes": changes,
                 "identity_changes": p.identity_changes(),
                 "how_to_apply": how_to_apply(changes),
@@ -122,9 +124,11 @@ class PersonalityTemplatePlugin(LunaPlugin):
                 name="personality_preview",
                 description=(
                     "Preview one personality: its voice summary, a sample reply, "
-                    "and the exact `personality_changes` to pass to "
-                    "manage_config(section='personality') when applying it. "
-                    "Read-only — does NOT change anything."
+                    "its signature `catchphrases` and on-theme `gif_terms`, and the "
+                    "exact `personality_changes` to pass to "
+                    "manage_config(section='personality') when applying it. The "
+                    "persona in `personality_changes` already tells you to fully "
+                    "become that character. Read-only — does NOT change anything."
                 ),
                 parameters={
                     "type": "object",

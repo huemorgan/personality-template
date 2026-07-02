@@ -3,7 +3,7 @@
 
 name = "personality-template"
 shown_name = "Personality Template"
-version = "0.1.4"
+version = "0.2.0"
 description = "A left-pane gallery of sci-fi AI personalities; apply one to reshape Luna's voice."
 entry = "personality_template"
 sdk_version = "0"
@@ -17,7 +17,11 @@ A **Personality** section in Luna's left sidebar: browse a gallery of famous
 sci-fi helper AIs (Jarvis, Cortana, Data, Oracle, T-800, and more) and apply one
 in a click. Applying reshapes Luna's settable prompt surfaces — persona, tone,
 verbosity, formality, emoji use, proactivity, honesty — so the agent's whole
-voice shifts. Reversible: "Reset to default Luna" restores stock.
+voice shifts. Each preset also makes Luna genuinely *become* the character:
+the applied persona names who it is (e.g. "you ARE the T-800"), folds in the
+character's famous catchphrases to adapt when they fit, and — if the GIPHY
+plugin is installed — suggests on-theme GIFs. Reversible: "Reset to default
+Luna" restores stock.
 
 The agent can also propose a fitting personality in chat via the
 `recommend-personality` skill; setting it always requires your approval.

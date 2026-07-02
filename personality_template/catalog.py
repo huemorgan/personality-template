@@ -66,10 +66,62 @@ class Personality:
     use_emoji: str
     proactive: str
     honesty_mode: str
+    # Optional flavor — the character's famous lines and on-theme GIF searches.
+    # Composed into the applied persona so the agent actually sounds like them.
+    catchphrases: tuple[str, ...] = ()
+    gif_terms: tuple[str, ...] = ()
+
+    def _character_block(self) -> str:
+        """The in-character preamble prepended to the persona on apply.
+
+        This is what makes the agent *be* the character rather than merely
+        adopt some knobs: it names who it is, tells it to lean on the model's
+        own knowledge of that character, and — if present — how to use the
+        catchphrases and GIFs. Kept out of the stored `persona` so the raw
+        behavioral text stays editable and the flavor stays data-driven.
+        """
+        lines = [
+            f"You are {self.name} from {self.source} — {self.archetype}. For this "
+            f"owner you are not imitating {self.name}; you ARE {self.name}. Draw on "
+            f"everything you know about the character — their voice, cadence, humor, "
+            f"mannerisms, and worldview — and stay fully in character while remaining "
+            f"genuinely useful. Being in character never excuses a worse answer."
+        ]
+        if self.catchphrases:
+            phrases = " / ".join(f"\u201c{c}\u201d" for c in self.catchphrases)
+            lines.append(
+                f"Signature lines: {phrases}. Use them only when they truly fit the "
+                f"moment, and adapt them to what is actually happening — bend a line "
+                f"to the task (for example, a coding twist on it) instead of quoting "
+                f"it flat. A well-timed, reworked line lands; a forced or constant one "
+                f"grates. Never let a catchphrase stand in for the real answer."
+            )
+        if self.gif_terms:
+            terms = ", ".join(f"\u201c{t}\u201d" for t in self.gif_terms)
+            lines.append(
+                f"If a GIF tool is available (the `send_gif` tool from the GIPHY "
+                f"plugin), you may occasionally punctuate a moment with a fitting GIF "
+                f"— on-theme searches for you: {terms}. Keep it rare and relevant, and "
+                f"skip it entirely when no GIF tool is loaded or it would get in the way."
+            )
+        return "\n\n".join(lines)
+
+    def full_persona(self) -> str:
+        """The persona string actually written on apply: the in-character
+        preamble followed by the stored behavioral persona."""
+        block = self._character_block()
+        return f"{block}\n\n{self.persona}" if block else self.persona
 
     def personality_changes(self) -> dict[str, str]:
-        """The `personality` config-section payload (persona + six knobs)."""
-        return {f: getattr(self, f) for f in PERSONALITY_FIELDS}
+        """The `personality` config-section payload (persona + six knobs).
+
+        `persona` is the *composed* in-character persona (see full_persona),
+        so the agent that adopts this preset actually talks like the character.
+        """
+        return {
+            "persona": self.full_persona(),
+            **{k: getattr(self, k) for k in KNOB_FIELDS},
+        }
 
     def identity_changes(self) -> dict[str, str]:
         """The `identity` config-section / PUT payload bits this preset sets."""
@@ -96,7 +148,12 @@ class Personality:
         d.update(
             {
                 "sample_reply": self.sample_reply,
+                # `persona` is the readable base text (shown in the drawer);
+                # `apply_persona` is the composed in-character text the UI writes.
                 "persona": self.persona,
+                "apply_persona": self.full_persona(),
+                "catchphrases": list(self.catchphrases),
+                "gif_terms": list(self.gif_terms),
                 "knobs": {f: getattr(self, f) for f in KNOB_FIELDS},
                 "avatar": f"avatars/{self.id}.png",
             }
@@ -125,9 +182,14 @@ class Catalog:
 
     def match_active(self, current: dict[str, Any]) -> str | None:
         """Return the id of the preset whose personality fields match the
-        current identity, or None (the UI shows "Custom"/"Default")."""
+        current identity, or None (the UI shows "Custom"/"Default").
+
+        Compares against the *applied* payload (composed persona) so a preset
+        set via Apply round-trips to a match.
+        """
         for p in self.personalities:
-            if all(str(current.get(f, "")) == str(getattr(p, f)) for f in PERSONALITY_FIELDS):
+            changes = p.personality_changes()
+            if all(str(current.get(f, "")) == str(changes[f]) for f in PERSONALITY_FIELDS):
                 return p.id
         return None
 
@@ -168,6 +230,8 @@ def _validate(raw: dict[str, Any]) -> Personality:
         use_emoji=str(raw["use_emoji"]),
         proactive=str(raw["proactive"]),
         honesty_mode=str(raw["honesty_mode"]),
+        catchphrases=tuple(str(x) for x in raw.get("catchphrases", [])),
+        gif_terms=tuple(str(x) for x in raw.get("gif_terms", [])),
     )
 
 

@@ -126,6 +126,15 @@ body {
   font-size: 20px; line-height: 1.5; padding: 2px 0;
 }
 .d-persona { color: var(--ink-2); }
+.d-label-note { text-transform: none; letter-spacing: 0; color: var(--ink-3); opacity: .8; }
+.d-phrases { display: flex; flex-direction: column; gap: 6px; }
+.phrase {
+  color: var(--ink); font-style: italic;
+  font-family: "Iowan Old Style", "Palatino", Georgia, "Times New Roman", serif;
+  border-left: 2px solid var(--accent); padding: 1px 0 1px 10px; line-height: 1.4;
+}
+.d-gifs { display: flex; flex-wrap: wrap; gap: 5px; }
+.gif-chip { color: var(--accent-2); border-color: rgba(110,231,214,.3); }
 .d-diff { display: flex; flex-direction: column; gap: 4px; }
 .diff-row { display: flex; gap: 8px; align-items: baseline; font-size: 13px; }
 .diff-row .f { color: var(--ink-3); width: 92px; flex: none; }
