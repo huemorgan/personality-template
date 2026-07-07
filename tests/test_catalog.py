@@ -16,13 +16,13 @@ _UI_AVATARS = Path(__file__).resolve().parents[1] / "personality_template" / "ui
 EXPECTED_IDS = {
     "data", "doctor", "tars", "marvin", "jarvis", "cortana", "kitt", "vision",
     "friday", "jane", "samantha", "baymax", "oracle", "johnny", "t800",
-    "ixa", "proto", "kx7",
+    "ixa", "proto", "kx7", "rayla",
 }
 
 
 def test_loads_all_presets():
     cat = load_catalog()
-    assert len(cat.personalities) == 18
+    assert len(cat.personalities) == 19
     assert set(cat.ids()) == EXPECTED_IDS
 
 

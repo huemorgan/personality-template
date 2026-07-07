@@ -3,8 +3,8 @@
 
 name = "personality-template"
 shown_name = "Personality Template"
-version = "0.3.0"
-description = "A left-pane gallery of sci-fi AI personalities; apply one to reshape Luna's voice."
+version = "0.3.1"
+description = "A left-pane gallery of iconic fictional personalities; apply one to reshape Luna's voice."
 entry = "personality_template"
 sdk_version = "0"
 license = "MIT"
