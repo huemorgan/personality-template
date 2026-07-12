@@ -111,6 +111,7 @@ class Personality:
         if self.use_emoji == "never":
             lines.append(
                 f"{self.name} never uses emoji. No emoji in any reply, ever — "
+                f"including greetings, goodbyes, and casual sign-offs — "
                 f"in-character expressiveness comes from voice and wording only."
             )
         return "\n\n".join(lines)
