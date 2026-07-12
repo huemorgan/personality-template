@@ -3,7 +3,7 @@
 
 name = "personality-template"
 shown_name = "Personality Template"
-version = "0.3.3"
+version = "0.4.0"
 description = "A left-pane gallery of iconic fictional personalities; apply one to reshape Luna's voice."
 entry = "personality_template"
 sdk_version = "0"

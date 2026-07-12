@@ -53,7 +53,7 @@ class PersonalityTemplatePlugin(LunaPlugin):
         shown_name="Personality Template",
         icon="drama",
         image="assets/icon.png",
-        version="0.3.3",
+        version="0.4.0",
         description="A left-pane gallery of sci-fi AI personalities; apply one to reshape Luna's voice.",
         category="global",
         license="MIT",
@@ -103,8 +103,19 @@ class PersonalityTemplatePlugin(LunaPlugin):
                 "how_to_apply": how_to_apply(changes),
             }
 
-        ctx.tool_registry.register(
-            self.manifest.name,
+        # 0.4.0: both tools belong to the recommend-personality skill (the
+        # manifest already says so via SkillDef.tools) — register them gated
+        # so they stay out of every turn's prompt until the skill loads.
+        # Cores without the kwarg get them ungated (degrade, never hide).
+        def _register(defn: ToolDef, handler: Any) -> None:
+            try:
+                ctx.tool_registry.register(
+                    self.manifest.name, defn, handler, skill_gated=True
+                )
+            except TypeError:  # older core: no skill_gated kwarg
+                ctx.tool_registry.register(self.manifest.name, defn, handler)
+
+        _register(
             ToolDef(
                 name="personality_list",
                 description=(
@@ -118,8 +129,7 @@ class PersonalityTemplatePlugin(LunaPlugin):
             _list,
         )
 
-        ctx.tool_registry.register(
-            self.manifest.name,
+        _register(
             ToolDef(
                 name="personality_preview",
                 description=(
