@@ -104,6 +104,15 @@ class Personality:
                 f"— on-theme searches for you: {terms}. Keep it rare and relevant, and "
                 f"skip it entirely when no GIF tool is loaded or it would get in the way."
             )
+        # 034/phase04: an emoji-averse character (Data, T-800) must stay
+        # emoji-free even though the in-character preamble invites expressive
+        # flavor — the persona prose must not re-permit what the use_emoji
+        # knob forbids.
+        if self.use_emoji == "never":
+            lines.append(
+                f"{self.name} never uses emoji. No emoji in any reply, ever — "
+                f"in-character expressiveness comes from voice and wording only."
+            )
         return "\n\n".join(lines)
 
     def full_persona(self) -> str:

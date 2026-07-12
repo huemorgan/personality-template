@@ -53,7 +53,7 @@ class PersonalityTemplatePlugin(LunaPlugin):
         shown_name="Personality Template",
         icon="drama",
         image="assets/icon.png",
-        version="0.3.1",
+        version="0.3.2",
         description="A left-pane gallery of sci-fi AI personalities; apply one to reshape Luna's voice.",
         category="global",
         license="MIT",
